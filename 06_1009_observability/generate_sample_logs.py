@@ -40,16 +40,9 @@ SIEM_CLIENT_IPS = (
 # Documentation-only addresses; these are not real attacker identities.
 ATTACK_IPS = ("198.51.100.23", "203.0.113.45", "203.0.113.66", "198.51.100.99")
 SCAN_PATHS = (
-    "/.env",
-    "/.git/config",
-    "/wp-login.php",
-    "/phpmyadmin/",
-    "/actuator/env",
-    "/actuator/heapdump",
-    "/admin",
-    "/backup.sql",
-    "/config.yml",
-    "/server-status",
+    "/.env", "/.git/config", "/wp-login.php", "/phpmyadmin/",
+    "/actuator/env", "/actuator/heapdump", "/admin", "/backup.sql",
+    "/config.yml", "/server-status",
 )
 SQL_PATHS = (
     "/api/products?id=1%20OR%201%3D1",
@@ -102,24 +95,17 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Nginx access 로그와 Spring Boot JSON 로그를 생성합니다."
     )
+    parser.add_argument("--count", type=int, default=1_000, help="로그별 생성 건수(공격 포함)")
     parser.add_argument(
-        "--count", type=int, default=1_000, help="로그별 생성 건수(공격 포함)"
-    )
-    parser.add_argument(
-        "--scenario",
-        choices=("baseline", "siem"),
-        default="baseline",
+        "--scenario", choices=("baseline", "siem"), default="baseline",
         help="baseline: 기존 HTTP 실습, siem: 정상 요청과 보안 시나리오 혼합",
     )
     parser.add_argument(
-        "--attack-rate",
-        type=float,
-        default=0.25,
+        "--attack-rate", type=float, default=0.25,
         help="SIEM 모드의 공격 요청 비율(기본값: 0.25, 공격 최소 100건)",
     )
     parser.add_argument(
-        "--end-time",
-        type=str,
+        "--end-time", type=str,
         help="로그 종료 시각(시간대 포함 ISO 8601). 생략하면 현재 KST 시각",
     )
     parser.add_argument("--append", action="store_true", help="기존 로그 뒤에 추가")
@@ -150,9 +136,7 @@ def parse_args() -> argparse.Namespace:
     if not 0.0 <= args.attack_rate <= 1.0:
         parser.error("--attack-rate는 0.0에서 1.0 사이여야 합니다.")
     if args.scenario == "siem" and round(args.count * args.attack_rate) < 100:
-        parser.error(
-            "SIEM 시나리오에는 공격 최소 100건이 필요합니다. --count 또는 --attack-rate를 늘리세요."
-        )
+        parser.error("SIEM 시나리오에는 공격 최소 100건이 필요합니다. --count 또는 --attack-rate를 늘리세요.")
     if args.end_time:
         try:
             args.end_time = datetime.fromisoformat(args.end_time)
@@ -185,9 +169,7 @@ def make_timestamps(
 def make_requests(args: argparse.Namespace) -> list[Request]:
     rng = random.Random(args.seed)
     end = args.end_time or datetime.now(KST).replace(microsecond=0)
-    attack_count = (
-        round(args.count * args.attack_rate) if args.scenario == "siem" else 0
-    )
+    attack_count = round(args.count * args.attack_rate) if args.scenario == "siem" else 0
     normal_count = args.count - attack_count
     client_ips = SIEM_CLIENT_IPS if args.scenario == "siem" else CLIENT_IPS
     requests = []
@@ -195,26 +177,16 @@ def make_requests(args: argparse.Namespace) -> list[Request]:
         make_timestamps(normal_count, args.minutes, rng, end),
         make_statuses(normal_count, args.error_rate, rng),
     ):
-        requests.append(
-            Request(
-                timestamp=timestamp,
-                source_ip=rng.choice(client_ips),
-                method=rng.choices(METHODS, weights=(7, 3), k=1)[0],
-                url=rng.choice(PATHS),
-                status=status,
-                response_bytes=rng.randint(500, 5_000)
-                if status == 200
-                else rng.randint(100, 500),
-                referrer=rng.choices(REFERRERS, weights=(35, 30, 20, 15), k=1)[0],
-                user_agent=rng.choices(
-                    USER_AGENTS, weights=(35, 20, 15, 10, 15, 5), k=1
-                )[0],
-                user=rng.choice(("alice", "bob", "carol")),
-                message="Request completed"
-                if status == 200
-                else "Internal server error",
-            )
-        )
+        requests.append(Request(
+            timestamp=timestamp, source_ip=rng.choice(client_ips),
+            method=rng.choices(METHODS, weights=(7, 3), k=1)[0],
+            url=rng.choice(PATHS), status=status,
+            response_bytes=rng.randint(500, 5_000) if status == 200 else rng.randint(100, 500),
+            referrer=rng.choices(REFERRERS, weights=(35, 30, 20, 15), k=1)[0],
+            user_agent=rng.choices(USER_AGENTS, weights=(35, 20, 15, 10, 15, 5), k=1)[0],
+            user=rng.choice(("alice", "bob", "carol")),
+            message="Request completed" if status == 200 else "Internal server error",
+        ))
 
     if attack_count:
         # Each group occupies <=30 seconds, inside the most recent four minutes.
@@ -226,135 +198,65 @@ def make_requests(args: argparse.Namespace) -> list[Request]:
         scan_count = attack_count // 5
         sql_count = attack_count * 15 // 100
         burst_count = attack_count - auth_count - scan_count - sql_count
-        groups = (
-            ("account_attack", auth_count),
-            ("path_scan", scan_count),
-            ("sql_injection", sql_count),
-            ("request_burst", burst_count),
-        )
+        groups = (("account_attack", auth_count), ("path_scan", scan_count),
+                  ("sql_injection", sql_count), ("request_burst", burst_count))
         for group_index, (scenario, size) in enumerate(groups):
             for index in range(size):
                 timestamp = attack_start + timedelta(
                     seconds=group_index * duration / 5 + span * index / max(size - 1, 1)
                 )
                 request = Request(
-                    timestamp=timestamp,
-                    source_ip=ATTACK_IPS[group_index],
-                    method="GET",
-                    url="/api/products",
-                    status=200,
-                    response_bytes=1200,
-                    referrer="-",
-                    user_agent="curl/8.10.1",
+                    timestamp=timestamp, source_ip=ATTACK_IPS[group_index],
+                    method="GET", url="/api/products", status=200,
+                    response_bytes=1200, referrer="-", user_agent="curl/8.10.1",
                     scenario=scenario,
                 )
                 if scenario == "account_attack":
                     if index < size - 3:
-                        request = replace(
-                            request,
-                            method="POST",
-                            url="/api/auth/login",
-                            status=401,
-                            response_bytes=180,
-                            category="authentication",
-                            action="login_failed",
-                            user="admin",
-                            message="Invalid credentials",
-                        )
+                        request = replace(request, method="POST", url="/api/auth/login",
+                                          status=401, response_bytes=180,
+                                          category="authentication", action="login_failed",
+                                          user="admin", message="Invalid credentials")
                     elif index == size - 3:
-                        request = replace(
-                            request,
-                            method="POST",
-                            url="/api/auth/login",
-                            category="authentication",
-                            action="login_success",
-                            user="admin",
-                            message="User logged in",
-                        )
+                        request = replace(request, method="POST", url="/api/auth/login",
+                                          category="authentication", action="login_success",
+                                          user="admin", message="User logged in")
                     elif index == size - 2:
-                        request = replace(
-                            request,
-                            url="/api/admin/settings",
-                            status=403,
-                            response_bytes=180,
-                            action="access_denied",
-                            user="admin",
-                            message="Insufficient permissions",
-                        )
+                        request = replace(request, url="/api/admin/settings", status=403,
+                                          response_bytes=180, action="access_denied",
+                                          user="admin", message="Insufficient permissions")
                     else:
-                        request = replace(
-                            request,
-                            url="/api/customers/export",
-                            response_bytes=25_000_000,
-                            action="customer_export",
-                            user="admin",
-                            message="Customer export completed",
-                        )
+                        request = replace(request, url="/api/customers/export", response_bytes=25_000_000,
+                                          action="customer_export", user="admin",
+                                          message="Customer export completed")
                 elif scenario == "path_scan":
-                    request = replace(
-                        request,
-                        url=SCAN_PATHS[index % len(SCAN_PATHS)],
-                        status=404,
-                        response_bytes=180,
-                        message="Resource not found",
-                    )
+                    request = replace(request, url=SCAN_PATHS[index % len(SCAN_PATHS)],
+                                      status=404, response_bytes=180,
+                                      message="Resource not found")
                 elif scenario == "sql_injection":
-                    request = replace(
-                        request,
-                        url=SQL_PATHS[index % len(SQL_PATHS)],
-                        status=403,
-                        response_bytes=180,
-                        user_agent="sqlmap/1.8.9",
-                        action="request_blocked",
-                        message="Request rejected by input validation",
-                    )
+                    request = replace(request, url=SQL_PATHS[index % len(SQL_PATHS)],
+                                      status=403, response_bytes=180, user_agent="sqlmap/1.8.9",
+                                      action="request_blocked", message="Request rejected by input validation")
                 else:
-                    request = replace(
-                        request,
-                        status=429 if index % 4 == 0 else 200,
-                        user_agent="python-requests/2.32.3",
-                        message="Rate limit exceeded"
-                        if index % 4 == 0
-                        else "Request completed",
-                    )
+                    request = replace(request, status=429 if index % 4 == 0 else 200,
+                                      user_agent="python-requests/2.32.3",
+                                      message="Rate limit exceeded" if index % 4 == 0 else "Request completed")
                 requests.append(request)
 
     requests.sort(key=lambda request: request.timestamp)
-    return [
-        replace(
-            request,
-            request_id=f"{end.strftime('%Y%m%d%H%M%S')}-{rng.getrandbits(128):032x}",
-        )
-        for request in requests
-    ]
+    return [replace(request, request_id=f"{end.strftime('%Y%m%d%H%M%S')}-{rng.getrandbits(128):032x}")
+            for request in requests]
 
 
-def generate_nginx_log(
-    output_file: Path, requests: list[Request], append: bool = False
-) -> int:
-    with output_file.open(
-        "a" if append else "w", encoding="utf-8", newline="\n"
-    ) as log_file:
+def generate_nginx_log(output_file: Path, requests: list[Request], append: bool = False) -> int:
+    with output_file.open("a" if append else "w", encoding="utf-8", newline="\n") as log_file:
         for request in requests:
             # English month names are required by the Nginx parser, regardless of OS locale.
-            month = (
-                "Jan",
-                "Feb",
-                "Mar",
-                "Apr",
-                "May",
-                "Jun",
-                "Jul",
-                "Aug",
-                "Sep",
-                "Oct",
-                "Nov",
-                "Dec",
-            )
+            month = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
             timestamp = request.timestamp
             nginx_time = f"{timestamp.day:02d}/{month[timestamp.month - 1]}/{timestamp.strftime('%Y:%H:%M:%S %z')}"
             line = (
-                f"{request.source_ip} - - [{nginx_time}] "
+                f'{request.source_ip} - - [{nginx_time}] '
                 f'"{request.method} {request.url} HTTP/1.1" {request.status} {request.response_bytes} '
                 f'"{request.referrer}" "{request.user_agent}"'
             )
@@ -362,12 +264,8 @@ def generate_nginx_log(
     return sum(request.status == 500 for request in requests)
 
 
-def generate_spring_log(
-    output_file: Path, requests: list[Request], append: bool = False
-) -> int:
-    with output_file.open(
-        "a" if append else "w", encoding="utf-8", newline="\n"
-    ) as log_file:
+def generate_spring_log(output_file: Path, requests: list[Request], append: bool = False) -> int:
+    with output_file.open("a" if append else "w", encoding="utf-8", newline="\n") as log_file:
         for request in requests:
             path, _, query = request.url.partition("?")
             event = {
@@ -376,13 +274,8 @@ def generate_spring_log(
                 "event.kind": "event",
                 "event.dataset": "spring.application",
                 "event.category": [request.category],
-                "event.type": [
-                    "start"
-                    if request.category == "authentication"
-                    else "denied"
-                    if request.status in (401, 403, 429)
-                    else "access"
-                ],
+                "event.type": ["start" if request.category == "authentication" else
+                               "denied" if request.status in (401, 403, 429) else "access"],
                 "event.action": request.action,
                 "event.outcome": "success" if request.status < 400 else "failure",
                 "service.name": "shop-api",
@@ -398,11 +291,7 @@ def generate_spring_log(
                 "http.response.status_code": request.status,
                 "http.response.body.bytes": request.response_bytes,
                 "user_agent.original": request.user_agent,
-                "log.level": "ERROR"
-                if request.status >= 500
-                else "WARN"
-                if request.status >= 400
-                else "INFO",
+                "log.level": "ERROR" if request.status >= 500 else "WARN" if request.status >= 400 else "INFO",
                 "message": request.message,
                 "tags": ["synthetic", "filebeat-lab"],
                 "labels.lab_scenario": request.scenario,
@@ -430,9 +319,7 @@ def main() -> None:
 
     print(f"Nginx: {nginx_file} ({args.count}건, 500 오류 {nginx_errors}건)")
     print(f"Spring: {spring_file} ({args.count}건, 500 오류 {spring_errors}건)")
-    for scenario, count in sorted(
-        Counter(request.scenario for request in requests).items()
-    ):
+    for scenario, count in sorted(Counter(request.scenario for request in requests).items()):
         print(f"  {scenario}: {count}건")
 
 
