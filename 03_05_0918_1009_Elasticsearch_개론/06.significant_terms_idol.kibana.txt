@@ -1,0 +1,295 @@
+# 가상 데이터: 실제 팬덤 통계가 아닙니다. 새 인덱스에서 위부터 실행하세요.
+PUT idol_meme_demo_v1
+{
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "properties": {
+      "group": {
+        "type": "keyword"
+      },
+      "tags": {
+        "type": "keyword"
+      }
+    }
+  }
+}
+
+POST idol_meme_demo_v1/_bulk?refresh=wait_for
+{"index":{"_id":"cortis-01"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-02"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-03"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-04"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-05"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-06"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-07"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-08"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"cortis-09"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크"]}
+{"index":{"_id":"cortis-10"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크"]}
+{"index":{"_id":"cortis-11"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크"]}
+{"index":{"_id":"cortis-12"}}
+{"group":"CORTIS","tags":["컴백","직캠","영크크"]}
+{"index":{"_id":"cortis-13"}}
+{"group":"CORTIS","tags":["컴백","직캠"]}
+{"index":{"_id":"cortis-14"}}
+{"group":"CORTIS","tags":["컴백","직캠"]}
+{"index":{"_id":"cortis-15"}}
+{"group":"CORTIS","tags":["컴백","직캠"]}
+{"index":{"_id":"cortis-16"}}
+{"group":"CORTIS","tags":["컴백","직캠"]}
+{"index":{"_id":"cortis-17"}}
+{"group":"CORTIS","tags":["컴백"]}
+{"index":{"_id":"cortis-18"}}
+{"group":"CORTIS","tags":["컴백"]}
+{"index":{"_id":"cortis-19"}}
+{"group":"CORTIS","tags":[]}
+{"index":{"_id":"cortis-20"}}
+{"group":"CORTIS","tags":[]}
+{"index":{"_id":"bts-01"}}
+{"group":"BTS","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"bts-02"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-03"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-04"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-05"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-06"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-07"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-08"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-09"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-10"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-11"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-12"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-13"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-14"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-15"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-16"}}
+{"group":"BTS","tags":["컴백","직캠"]}
+{"index":{"_id":"bts-17"}}
+{"group":"BTS","tags":["컴백"]}
+{"index":{"_id":"bts-18"}}
+{"group":"BTS","tags":["컴백"]}
+{"index":{"_id":"bts-19"}}
+{"group":"BTS","tags":[]}
+{"index":{"_id":"bts-20"}}
+{"group":"BTS","tags":[]}
+{"index":{"_id":"seventeen-01"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠","영크크","늙크크"]}
+{"index":{"_id":"seventeen-02"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-03"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-04"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-05"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-06"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-07"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-08"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-09"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-10"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-11"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-12"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-13"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-14"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-15"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-16"}}
+{"group":"SEVENTEEN","tags":["컴백","직캠"]}
+{"index":{"_id":"seventeen-17"}}
+{"group":"SEVENTEEN","tags":["컴백"]}
+{"index":{"_id":"seventeen-18"}}
+{"group":"SEVENTEEN","tags":["컴백"]}
+{"index":{"_id":"seventeen-19"}}
+{"group":"SEVENTEEN","tags":[]}
+{"index":{"_id":"seventeen-20"}}
+{"group":"SEVENTEEN","tags":[]}
+{"index":{"_id":"aespa-01"}}
+{"group":"aespa","tags":["컴백","직캠","영크크"]}
+{"index":{"_id":"aespa-02"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-03"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-04"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-05"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-06"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-07"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-08"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-09"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-10"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-11"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-12"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-13"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-14"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-15"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-16"}}
+{"group":"aespa","tags":["컴백","직캠"]}
+{"index":{"_id":"aespa-17"}}
+{"group":"aespa","tags":["컴백"]}
+{"index":{"_id":"aespa-18"}}
+{"group":"aespa","tags":["컴백"]}
+{"index":{"_id":"aespa-19"}}
+{"group":"aespa","tags":[]}
+{"index":{"_id":"aespa-20"}}
+{"group":"aespa","tags":[]}
+{"index":{"_id":"twice-01"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-02"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-03"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-04"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-05"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-06"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-07"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-08"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-09"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-10"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-11"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-12"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-13"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-14"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-15"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-16"}}
+{"group":"TWICE","tags":["컴백","직캠"]}
+{"index":{"_id":"twice-17"}}
+{"group":"TWICE","tags":["컴백"]}
+{"index":{"_id":"twice-18"}}
+{"group":"TWICE","tags":["컴백"]}
+{"index":{"_id":"twice-19"}}
+{"group":"TWICE","tags":[]}
+{"index":{"_id":"twice-20"}}
+{"group":"TWICE","tags":[]}
+
+GET idol_meme_demo_v1/_count
+
+# 코르티스 글에서 인기 태그와 특징적인 태그 비교
+GET idol_meme_demo_v1/_search
+{
+  "size": 0,
+  "query": {
+    "term": {
+      "group": "CORTIS"
+    }
+  },
+  "aggs": {
+    "popular_tags": {
+      "terms": {
+        "field": "tags",
+        "size": 10
+      }
+    },
+    "distinctive_tags": {
+      "significant_terms": {
+        "field": "tags",
+        "size": 10,
+        "min_doc_count": 3,
+        "jlh": {}
+      }
+    }
+  }
+}
+
+# 배경을 코르티스와 BTS 글 40개로 변경
+GET idol_meme_demo_v1/_search
+{
+  "size": 0,
+  "query": {
+    "term": { "group": "CORTIS" }
+  },
+  "aggs": {
+    "distinctive_tags": {
+      "significant_terms": {
+        "field": "tags",
+        "size": 10,
+        "min_doc_count": 3,
+        "jlh": {},
+        "background_filter": {
+          "terms": { "group": ["CORTIS", "BTS"] }
+        }
+      }
+    }
+  }
+}
+
+# 각 그룹을 foreground로 삼고 전체 인덱스와 비교
+GET idol_meme_demo_v1/_search
+{
+  "size": 0,
+  "aggs": {
+    "by_group": {
+      "terms": {
+        "field": "group",
+        "size": 10
+      },
+      "aggs": {
+        "distinctive_tags": {
+          "significant_terms": {
+            "field": "tags",
+            "size": 10,
+            "min_doc_count": 3,
+            "jlh": {}
+          }
+        }
+      }
+    }
+  }
+}
