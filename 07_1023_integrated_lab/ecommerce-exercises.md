@@ -66,7 +66,6 @@ es = Elasticsearch(
 | 상품명 | `products.product_name` | 상품명 검색 |
 | 상품 ID | `products.product_id` | 상품 행 단위 표의 상품 식별 |
 
-한 문서가 나타내는 단위와 `products`에 들어 있는 데이터의 단위를 각각 한 문장으로 설명합니다.
 
 ### 공통 분석 조건
 
