@@ -116,7 +116,7 @@ GET kibana_sample_data_ecommerce/_search
 | `geoip.country_iso_code` | `keyword` |
 | `products.product_name` | `text` |
 
-템플릿에는 위 7개 필드의 타입을 직접 지정하세요. 표에 없는 필드도 원본 그대로 저장하며, 해당 필드의 타입은 Elasticsearch가 자동으로 정하도록 기본 다이내믹 매핑을 사용하세요. 원본 인덱스의 매핑을 통째로 복사하는 작업은 아닙니다.
+템플릿의 `index_patterns`는 `orders-*`로 지정하고, `template.mappings`에 위 7개 필드의 타입을 설정하세요. `settings`와 `aliases`는 기본값을 사용합니다. 표에 없는 필드도 원본 그대로 저장하며, 해당 필드의 타입은 Elasticsearch가 자동으로 정하도록 기본 다이내믹 매핑을 사용하세요. 원본 인덱스의 매핑을 통째로 복사하는 작업은 아닙니다.
 
 **템플릿 만들기**
 
@@ -154,7 +154,7 @@ GET kibana_sample_data_ecommerce/_search
 
 ### 1-2. 필드 이름에 따라 타입 정하기
 
-`orders-template`에 다음 규칙을 추가하세요.
+`orders-template`의 `template.mappings`에 다음 규칙을 추가하세요. 이번 문제에서는 `mappings`만 수정하면 됩니다.
 
 | 새로 들어오는 필드 | 저장할 타입 |
 | --- | --- |
