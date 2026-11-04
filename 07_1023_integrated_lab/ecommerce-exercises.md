@@ -34,7 +34,7 @@ Kibana의 `Sample eCommerce orders`를 사용해 주문을 검색하고, 통계�
 학생용 저장소 `2609_kookmin_rag` 루트에서 실행하세요.
 
 ```sh
-uv run --script ./08_1023_integrated_lab/es.py
+uv run --script ./07_1023_integrated_lab/es.py
 ```
 
 `es.py`에서 주소, 사용자 이름, 비밀번호를 수업에서 받은 값으로 바꾸세요.

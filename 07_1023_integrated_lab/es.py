@@ -5,7 +5,7 @@
 """Elasticsearch 8.19 접속 확인과 검색 예제.
 
 학생용 저장소 루트에서 실행:
-    uv run --script ./08_1023_integrated_lab/es.py
+    uv run --script ./07_1023_integrated_lab/es.py
 
 """
 
