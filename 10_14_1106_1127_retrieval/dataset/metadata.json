@@ -1,0 +1,32 @@
+{
+  "source_split": "ko/dev",
+  "seed": 42,
+  "query_revision": "5be20db9509754dadad47689368639fcec739c00",
+  "corpus_revision": "d921ec7e349ce0d28daf30b2da9da5ee698bef0d",
+  "source_passages": 1486752,
+  "queries": 50,
+  "passages": 1000,
+  "judgments": 716,
+  "positive_judgments": 117,
+  "judged_passages": 711,
+  "additional_passages": 289,
+  "sampling": "random.Random(42).sample on source dev topics; retain all judged passages; fill by smallest SHA256('42:' + docid)",
+  "files": {
+    "corpus.jsonl": {
+      "bytes": 627919,
+      "sha256": "935185df7fcf6a3a640a7856a0714ce917fd69adbd58bb8231ffef2faffa78a5"
+    },
+    "queries.jsonl": {
+      "bytes": 4642,
+      "sha256": "3d324f816288c1a7b9c5b30f7ab18fcc18afe9236cce591195b0af2d8a072167"
+    },
+    "qrels.jsonl": {
+      "bytes": 40959,
+      "sha256": "0cedfc1cc5d4eb7ff34fc8111d25b930ea50261cc34ec1dae0de2be2ec343e86"
+    },
+    "qrels.tsv": {
+      "bytes": 13035,
+      "sha256": "dd4e9cab7a58e8ab55be6fd310e7d293a3c72b9c7577a1d5f1d7e7f135238fed"
+    }
+  }
+}
