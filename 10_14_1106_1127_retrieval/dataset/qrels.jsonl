@@ -69,13 +69,13 @@
 {"query_id": "1108", "docid": "962003#0", "relevance": 0}
 {"query_id": "1108", "docid": "962003#2", "relevance": 0}
 {"query_id": "1108", "docid": "981530#3", "relevance": 1}
-{"query_id": "1192", "docid": "64649#0", "relevance": 1}
+{"query_id": "1192", "docid": "64649#0", "relevance": 0}
 {"query_id": "1192", "docid": "64649#19", "relevance": 0}
 {"query_id": "1192", "docid": "64649#2", "relevance": 0}
 {"query_id": "1192", "docid": "64649#23", "relevance": 0}
 {"query_id": "1192", "docid": "64649#24", "relevance": 0}
 {"query_id": "1192", "docid": "64649#28", "relevance": 0}
-{"query_id": "1192", "docid": "64649#3", "relevance": 0}
+{"query_id": "1192", "docid": "64649#3", "relevance": 1}
 {"query_id": "1192", "docid": "64649#32", "relevance": 0}
 {"query_id": "1192", "docid": "64649#44", "relevance": 0}
 {"query_id": "1192", "docid": "64649#45", "relevance": 0}
