@@ -28,7 +28,7 @@ def rerank(question, hits):
 
 
 def main():
-    rrf = runpy.run_path(str(Path(__file__).with_name("6.rrf.py")))
+    rrf = runpy.run_path(str(Path(__file__).with_name("7.rrf.py")))
     args = rrf["parse_args"]()
 
     with Elasticsearch(
