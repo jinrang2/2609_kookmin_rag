@@ -2,6 +2,7 @@
 06_1009_observability/__pycache__/test_generate_sample_logs.cpython-312.pyc
 logs/
 .venv/
+.env
 search_lab/__pycache__/
 search_lab/.data/
 search_lab/elasticsearch.json
