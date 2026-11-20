@@ -27,7 +27,8 @@ def search(client, question):
             "multi_match": {
                 "query": question,
                 "fields": ["title", "text"],
-                "analyzer": "korean_text",
+                "analyzer": "korean_search_synonyms",
+                "type": "cross_fields",
             }
         },
     }
